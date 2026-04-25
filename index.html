@@ -191,5 +191,48 @@
         </div>
     </footer>
 
+    <script>
+        async function updateStats() {
+            try {
+                const response = await fetch('api.php?action=status');
+                const data = await response.json();
+                
+                if (data.online_players !== undefined) {
+                    document.querySelector('.status-text').innerText = `Online - ${data.online_players} Players`;
+                }
+
+                if (data.factions) {
+                    const factionScores = document.querySelectorAll('.faction-score .score');
+                    if (factionScores.length >= 2) {
+                        factionScores[0].innerText = data.factions[0].score;
+                        factionScores[1].innerText = data.factions[1].score;
+                    }
+                }
+            } catch (err) {
+                console.log('API not reachable, using static/mock data.');
+            }
+        }
+
+        async function updateTopFraggers() {
+            try {
+                const response = await fetch('api.php?action=top_fraggers');
+                const data = await response.json();
+                
+                if (data.top_fraggers) {
+                    const list = document.querySelector('.top-fraggers');
+                    list.innerHTML = data.top_fraggers.map((p, i) => `
+                        <li><span class="rank">${i+1}</span> <span class="player">${p.name}</span> <span class="frags">${p.frags} kills</span></li>
+                    `).join('');
+                }
+            } catch (err) {
+                console.log('Top Fraggers API not reachable.');
+            }
+        }
+
+        // Auto-update every 30 seconds
+        updateStats();
+        updateTopFraggers();
+        setInterval(updateStats, 30000);
+    </script>
 </body>
 </html>

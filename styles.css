@@ -8,8 +8,9 @@
     --blood-red-glow: #b90f0f;
     --gold: #cfb53b;
     --gold-glow: #fada5e;
-    --panel-bg: rgba(20, 20, 24, 0.7);
+    --panel-bg: rgba(15, 15, 20, 0.75);
     --panel-border: rgba(207, 181, 59, 0.2);
+    --glass-blur: blur(12px);
     
     --font-heading: 'Cinzel', serif;
     --font-body: 'Inter', sans-serif;
@@ -34,17 +35,85 @@ body {
     overflow-x: hidden;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+.glass-panel {
+    background: var(--panel-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(207, 181, 59, 0.15);
+    border-color: rgba(207, 181, 59, 0.4);
 }
 
 /* TYPOGRAPHY */
-h1, h2, h3, h4 {
+/* NAVIGATION */
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(10, 10, 12, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(207, 181, 59, 0.1);
+    padding: 15px 0;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
     font-family: var(--font-heading);
-    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 1.5rem;
     letter-spacing: 2px;
+}
+
+.logo span {
+    color: var(--gold);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+}
+
+.nav-links a:hover {
+    color: var(--gold);
+}
+
+.nav-btn {
+    background: var(--blood-red);
+    padding: 8px 20px;
+    border-radius: 4px;
+    color: #fff !important;
+    box-shadow: 0 0 15px rgba(138, 3, 3, 0.4);
+    transition: all 0.3s ease !important;
+}
+
+.nav-btn:hover {
+    background: var(--blood-red-glow) !important;
+    transform: scale(1.05);
 }
 
 .section-title {
@@ -296,11 +365,13 @@ h1, h2, h3, h4 {
 }
 
 .legion-card {
-    background: var(--bg-darker);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 4px;
-    padding: 2rem;
-    transition: all 0.3s ease;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
     position: relative;
     overflow: hidden;
 }
